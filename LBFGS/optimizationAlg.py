@@ -41,7 +41,7 @@ def lbfgs(JFWI, m0, m, bulksp, datasp, iterMax, alpha, beta, c, verbose, eps, ga
     df_old = df.dup()
     s = mest.dup()
     y = df.dup()
-    while df.norm() > tol*dfnorm0 and k <= Kmax:
+    while df.norm() > tol and k <= Kmax:
 
         p = lsalg.descent_direction_1(df, k, m, s_set, y_set, gamma)
         m_old.copy(mest)
@@ -67,9 +67,9 @@ def lbfgs(JFWI, m0, m, bulksp, datasp, iterMax, alpha, beta, c, verbose, eps, ga
         # y_k = df_{k+1} - df_k
         y.copy(df)
         y.linComb(-1,df_old,1)
-        print(" ")
-        print(f"s^Ty = {s.dot(y)}")
-        print(" ")
+#        print(" ")
+#        print(f"s^Ty = {s.dot(y)}")
+#        print(" ")
         if k < m:
             s_set.append(s.dup())
             y_set.append(y.dup())
@@ -83,11 +83,7 @@ def lbfgs(JFWI, m0, m, bulksp, datasp, iterMax, alpha, beta, c, verbose, eps, ga
             y_set.append(y.dup())
         gamma = s_set[-1].dot(y_set[-1])/y_set[-1].dot(y_set[-1])
         k += 1
-#        print("-------------")
-#        print(f"s^Ty = {s_set[-1].dot(y_set[-1])}")
-#        print(f"y^Ty = {y_set[-1].dot(y_set[-1])}")
-#        print(f"gamma = {gamma}")
-#        print("-------------")
+
         if k >= Kmax:
             print("The BFGFS algorithm reached the maximum number of iterations.")
             break

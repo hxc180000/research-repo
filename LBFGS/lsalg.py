@@ -6,7 +6,7 @@ import math
 import linalg
 from vcl import Vector
 from vcl import transp
-
+import time
 
 # s_set and y_set stored the last m vectors of s and y, respectively
 def descent_direction_1(df, k, m, s_set, y_set,gamma):
@@ -47,7 +47,7 @@ def descent_direction_1(df, k, m, s_set, y_set,gamma):
 # beta: contraction factor
 # c: Armijo condition parameter
 def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot):
-    
+    start_time = time.time()
     print(" ")
     print(f"Iteration {k+1} of LBFGS:")
     print(f"i is the iteration counter for line search.")
@@ -60,12 +60,23 @@ def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot
     xn.linComb(alpha,p)
     pnorm = p.norm()
     if verbose > 0:
-#        print(f"Backtracking Line Search at k = {k}:")
-        print(f"i = 0 alpha = 0 f(x) =  + {fx}")
+        print(" ")
+        print(f"Before Line Search:")
+        print(f"i = 0 alpha = 0 f(x) =  + {fx} dfp = {dfp}")
+        print(" ")
+        print(f"During Line Search:")
     while f(xn) > fx + c*alpha*dfp and i <= iterMax:
+        if dfp > 0:
+            print("ERROR: POSITIVE GRADIENT.")
+            break
         jtot += 1
-#        if verbose > 0:
-#            print(f"i = {i} alpha = {alpha} f = {f(xn)}")
+        if verbose > 0:
+            print(" ")
+            print(f"i={i}    alpha={alpha}   f(x)={fx}    f(x)-f(xn)={fx-f(xn)}")
+            print(f"||p||={pnorm}     ||df||={df.norm()}    dfp={dfp} ")
+            print(f"c*alpha*dfp={c*alpha*dfp}")
+            print(" ")
+        
         alpha = alpha*beta
         ktot += 1
         xn.copy(x)
@@ -73,16 +84,19 @@ def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot
   
         i = i+1
         
-        print(" ")
-        print(f"i={i}    alpha={alpha}   f(x)={fx}    f(x)-f(xn)={fx-f(xn)}")
-        print(f"|p|={pnorm}     |df|={df.norm()}    dfp={dfp} ")
-        print(f"c*alpha*dfp={c*alpha*dfp}")
-        print(" ")
     if i < iterMax:
         x.copy(xn)
-#        if verbose > 0:
-#            print(f"i = {i} alpha = {alpha} f = {f(xn)}")
-        print(f"k = {k+1} alpha = {alpha} f = {f(xn)} ||df|| = {f.gradient(x).norm()}")
+        if verbose > 0:
+            print(" ")
+            print(f"i={i}    alpha={alpha}   f(x)={fx}    f(x)-f(xn)={fx-f(xn)}")
+            print(f"||p||={pnorm}     ||df||={df.norm()}    dfp={dfp} ")
+            print(f"c*alpha*dfp={c*alpha*dfp}")
+            print(" ")
+        print(f"k = {k+1} alpha = {alpha} f(xn) = {f(xn)} ||df|| = {f.gradient(x).norm()}")
+    
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"The total run time for this line search is: {elapsed_time} sec.")
     print("-----------------------------------------------------------------------------")
     print("-----------------------------------------------------------------------------")
     return [i,x,jtot,ktot]
