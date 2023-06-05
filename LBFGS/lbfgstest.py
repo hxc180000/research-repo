@@ -35,7 +35,7 @@ datasp = segyvc.Space('data.su')
 
 
 # the number of vector pair {s,y} we want to keep
-m = 10
+m = 3
 k = 0
 
 
@@ -98,7 +98,7 @@ verbose = 1
 beta = 0.5
 eps = 0.00000000000001
 Kmax = 1200
-tol = 0.0001
+tol = 0.00001
 plot_on = 0 #  plot for the solution
 gamma = 1
 
