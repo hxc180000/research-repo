@@ -76,7 +76,7 @@ def lbfgs(JFWI, m0, m, bulksp, datasp, iterMax, alpha, beta, c, verbose, eps, ga
 
         #print(f"eps*s^Ty = {eps*s.norm()*y.norm()}")
         #if k >= m and abs(s.dot(y)) > eps and abs(y.dot(y)) > eps:
-        if k >= m and s.dot(y) > eps*s.norm()*y.norm() and y.dot(y) > eps*y.norm()**2:
+        if k >= m and s.dot(y) > eps*s.norm()*y.norm():# and y.dot(y) > eps*y.norm()**2:
             s_set.pop(0)
             s_set.append(s.dup())
             y_set.pop(0)
