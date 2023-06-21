@@ -48,9 +48,10 @@ def descent_direction_1(df, k, m, s_set, y_set,gamma):
 # c: Armijo condition parameter
 def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot):
     start_time = time.time()
-    print(" ")
-    print(f"Iteration {k+1} of LBFGS:")
-    print(f"i is the iteration counter for line search.")
+    if verbose > 0:
+        print(" ")
+        print(f"Iteration {k+1} of LBFGS:")
+        print(f"i is the iteration counter for line search.")
     fx = f(x)
     df = df.dup()
     dfp = df.dot(p)
@@ -92,13 +93,14 @@ def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot
             print(f"||p||={pnorm}     ||df||={df.norm()}    dfp={dfp} ")
             print(f"c*alpha*dfp={c*alpha*dfp}")
             print(" ")
-        print(f"k = {k+1} alpha = {alpha} f(xn) = {f(xn)} ||df|| = {f.gradient(x).norm()}")
+            print(f"k = {k+1} alpha = {alpha} f(xn) = {f(xn)} ||df|| = {f.gradient(x).norm()}")
     
     end_time = time.time()
     elapsed_time = end_time - start_time
-    print(f"The total run time for this line search is: {elapsed_time} sec.")
-    print("-----------------------------------------------------------------------------")
-    print("-----------------------------------------------------------------------------")
+    if verbose > 0:
+        print(f"The total run time for this line search is: {elapsed_time} sec.")
+        print("-----------------------------------------------------------------------------")
+        print("-----------------------------------------------------------------------------")
     return [i,x,jtot,ktot]
 
 
