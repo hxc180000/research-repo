@@ -66,7 +66,7 @@ def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot
     if verbose > 0:
         print(" ")
         print(f"Before Line Search:")
-        print(f"i = 0 alpha = 0 f(x) =  + {fxValue} dfp = {dfp}")
+        print(f"i = 0 alpha = 0 f(x) =  {fxValue} dfp = {dfp}")
         print(" ")
         print(f"During Line Search:")
     while fxnValue > fxValue + c*alpha*dfp and i <= iterMax:
@@ -77,7 +77,8 @@ def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot
         if verbose > 0:
             print(" ")
             print(f"fxvalue is {fxValue}")
-            print(f"i={i}    alpha={alpha}   f(x)={fxValue}    f(x)-f(xn)={fxValue-fxnValue}")
+            print(f"i={i}    alpha={alpha}   f(x) =  {fxValue}   f(x)-f(xn)={fxValue-fxnValue}")
+#            print('i=' + str(i) + 'alpha=' + str(alpha) +  'f(x) = ' + str(fxValue-0) +  'f(x)-f(xn)=' + str(fxValue-fxnValue))
             print(f"||p||={pnorm}     ||df||={df.norm()}    dfp={dfp} ")
             print(f"c*alpha*dfp={c*alpha*dfp}")
             print(" ")
@@ -94,7 +95,7 @@ def bt_lineSearch_1(f, x, df, p, k, iterMax, alpha, beta, c, verbose, jtot, ktot
         x.copy(xn)
         if verbose > 0:
             print(" ")
-            print(f"i={i}    alpha={alpha}   f(x)={fx}    f(x)-f(xn)={fxValue-fxnValue}")
+            print(f"i={i}    alpha={alpha}   f(x)={fxValue}    f(x)-f(xn)={fxValue-fxnValue}")
             print(f"||p||={pnorm}     ||df||={df.norm()}    dfp={dfp} ")
             print(f"c*alpha*dfp={c*alpha*dfp}")
             print(" ")
